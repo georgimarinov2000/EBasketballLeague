@@ -20,6 +20,7 @@ namespace DataAccess
         public DbSet<Player> Players { get; set; }
         public DbSet<PlayerBrand> PlayerBrands { get; set; }
         public DbSet<Team> Teams { get; set; }
+        public DbSet<LoginModel> LoginModels { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

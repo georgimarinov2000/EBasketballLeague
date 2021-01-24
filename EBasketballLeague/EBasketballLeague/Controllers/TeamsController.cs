@@ -1,5 +1,6 @@
 ﻿using DataAccess;
 using DataStructure;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -18,6 +19,7 @@ namespace EBasketballLeague.Controllers
         {
             this.applicationDbContext = applicationDbContext;
         }
+        [Authorize]
         [HttpGet]
         public IActionResult GetTeams()
         {

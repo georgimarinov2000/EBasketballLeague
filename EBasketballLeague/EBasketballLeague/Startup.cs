@@ -12,6 +12,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using DataAccess;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace EBasketballLeague
 {
@@ -24,9 +27,28 @@ namespace EBasketballLeague
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+       // This method gets called by the runtime.Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication(opt =>
+            {
+                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+                 .AddJwtBearer(options =>
+                 {
+                     options.TokenValidationParameters = new TokenValidationParameters
+                     {
+                         ValidateIssuer = true,
+                         ValidateAudience = true,
+                         ValidateLifetime = true,
+                         ValidateIssuerSigningKey = true,
+
+                         ValidIssuer = "http://localhost:5000/",
+                         ValidAudience = "http://localhost:5000/",
+                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("SecretKey99/Basketball"))
+                     };
+                 });
             services.AddControllers();
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("MyConnectionString")));
         }
@@ -43,6 +65,7 @@ namespace EBasketballLeague
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
