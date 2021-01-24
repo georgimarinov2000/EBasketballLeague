@@ -10,7 +10,7 @@ namespace DataStructure
         public int Capacity { get; set; }
         public virtual  Team Team { get; set; }
         [ForeignKey("LocationId")]
-        public int LocationId { get; set; }
+        public int? LocationId { get; set; }
         public virtual Location Location { get; set; }
         
     }

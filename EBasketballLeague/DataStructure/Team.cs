@@ -9,7 +9,7 @@ namespace DataStructure
     {
         public int Championships { get; set; }
         [ForeignKey("ArenaId")]
-        public int ArenaId { get; set; }
+        public int? ArenaId { get; set; }
         public virtual Arena Arena { get; set; }
         public virtual List<Player> Players { get; set; }
     }
