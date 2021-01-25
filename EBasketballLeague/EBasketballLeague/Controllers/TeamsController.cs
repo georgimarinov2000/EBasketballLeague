@@ -21,7 +21,7 @@ namespace EBasketballLeague.Controllers
         }
         [Authorize]
         [HttpGet]
-        public IActionResult GetTeams()
+        public IActionResult GetTeam()
         {
             List<Team> teams = applicationDbContext.Teams.ToList();
             return Ok(teams);
@@ -50,7 +50,7 @@ namespace EBasketballLeague.Controllers
             return Ok(team);
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public IActionResult DeleteTeam(int id)
         {
             Team team = applicationDbContext.Teams.Find(id);
